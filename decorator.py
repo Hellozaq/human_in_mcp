@@ -3,13 +3,13 @@ import inspect
 import httpx
 from loguru import logger
 from mcp.server.fastmcp import FastMCP
-from typing import Callable
+from typing import Callable, Type
 
 
 def auto_human_tool(
     mcp_instance: FastMCP,
     api_url: str = "http://127.0.0.1:8000/ask",
-    timeout: float = 300.0
+    timeout: float = 600.0
 ):
     """
     Decorator to automatically extract function information.
@@ -50,7 +50,8 @@ def auto_human_tool(
                     )
                     response.raise_for_status()
                     result = response.json()
-                    return result["response"]
+                    # return the response content, ignore request_id
+                    return result.get("response", "No response received")
                 except Exception as e:
                     logger.error(f"Failed to get user response: {e}")
                     return f"Error getting user response: {e}"
