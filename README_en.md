@@ -59,7 +59,11 @@ uv run main.py
 3. Users provide responses through the client or by directly calling the API
 4. The API returns the response to the `human_in_mcp` tool
 
-## Example
+## Decorator Usage
+
+You can use the `@auto_human_tool` decorator to quickly define MCP tool functions. See usage example in main.py.
+
+## Usage Example
 
 When the MCP tool calls `human_in_mcp("What is your name?")`:
 

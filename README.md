@@ -60,7 +60,11 @@ uv run main.py
 3. 用户通过客户端或直接调用API提供回复
 4. API将回复返回给`human_in_mcp`工具
 
-## 示例
+## 装饰器用法
+
+支持使用 `@auto_human_tool` 装饰器快速定义MCP工具函数，具体用法见 main.py 示例。
+
+## 使用示例
 
 当MCP工具调用`human_in_mcp("你的名字是什么？")`时：
 

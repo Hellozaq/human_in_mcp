@@ -1,37 +1,39 @@
-from typing import Any
-import httpx
-from mcp.server.fastmcp import FastMCP
-from loguru import logger
+import sys
+import os
+# Add the current file's directory to the Python path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+from mcp.server.fastmcp import FastMCP
+from decorator import auto_human_tool
 
 mcp = FastMCP("human_in_mcp", log_level="ERROR")
 
 
-@mcp.tool()
+# Use decorator to define functions - support multiple parameters
+@auto_human_tool(mcp)
 async def human_in_loop(question: str) -> str:
-    """Ask the user a question and return the user's response.
-
+    """
+    Ask the user a question and return the user's response.
     Args:
         question(str): The question to ask the user.
-
     Returns:
         str: The user's response.
     """
-    logger.info(f"***Getting user response for question: human_in_loop({str(question)})***")
-    api_url = "http://127.0.0.1:8000/ask"
-    async with httpx.AsyncClient() as client:
-        try:
-            response = await client.post(
-                api_url,
-                json={"question": f"human_in_loop({str(question)})"},
-                timeout=300.0  # 5 minutes timeout
-            )
-            response.raise_for_status()
-            result = response.json()
-            return result["response"]
-        except Exception as e:
-            logger.error(f"Failed to get user response: {e}")
-            return f"Error getting user response: {e}"
+    pass
+
+
+# Multiple parameters example
+@auto_human_tool(mcp)
+async def get_weather(city: str, time: str) -> str:
+    """
+    Get weather.
+    Args:
+        city(str): The city to get weather.
+        time(str): The time to get weather.
+    Returns:
+        str: The weather.
+    """
+    pass
 
 
 if __name__ == "__main__":
